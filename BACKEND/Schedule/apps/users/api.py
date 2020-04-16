@@ -2,12 +2,12 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializers import CreateUserSerializer, LoginSerializer, UserSerializer
 from rest_framework.authtoken.models import Token
-#from rest_framework.authentication import 
+#from rest_framework.authentication import
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import login, logout
 from rest_framework import status
 from rest_framework.generics import GenericAPIView
-#from django.views.decorators.csrf import csrf_protect 
+#from django.views.decorators.csrf import csrf_protect
 from django.middleware.csrf import get_token
 #from django.contrib.auth import login
 
@@ -23,10 +23,9 @@ class CreateUserVIEW(APIView):
             return Response(serializer.data,status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors,status.HTTP_400_BAD_REQUEST)
-    
+
 class LoginView(GenericAPIView):
     serializer_class=LoginSerializer
-
     def post(self,request):
         serializer=self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -48,6 +47,3 @@ class LogoutView(APIView):
         user=request.user
         logout(request)
         Response({"User":"cerrado"},status.HTTP_200_OK)
-
-
-        

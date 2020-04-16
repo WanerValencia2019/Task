@@ -14,7 +14,7 @@ function Login(state = initialState, action) {
     case Actions.LOGIN_SUCCES:
       return {...state,user:action.user,token:action.token,sign_in:true}
     case Actions.LOGIN_ERROR:
-      return {...state,error:true};
+      return {...state,error:true,status:action.status};
       break;
     case Actions.SIGN_OFF:
       return {...state,sign_in:false,user:null,token:null,error:false}

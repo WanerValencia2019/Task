@@ -1,5 +1,5 @@
 import {fade,makeStyles} from "@material-ui/core/styles"
-
+const drawerWidth = 240;
 export default makeStyles(theme => ({
   root: {
     flexGrow: 1
@@ -61,5 +61,20 @@ export default makeStyles(theme => ({
   link:{
     color: "rgba(0,0,0,0.87)",
     textDecorationLine: 'none'
+  },
+  drawer: {
+    width: drawerWidth,
+    flexShrink: 0,
+  },
+  drawerPaper: {
+    width: drawerWidth,
+  },
+  drawerHeader: {
+    display: 'flex',
+    alignItems: 'center',
+    padding: theme.spacing(0, 1),
+    // necessary for content to be below app bar
+    ...theme.mixins.toolbar,
+    justifyContent: 'flex-end',
   },
 }));

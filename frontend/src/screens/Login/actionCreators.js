@@ -21,6 +21,7 @@ export const getLogin=(username,password)=>async(dispatch)=>{
     console.log(error);
     return (dispatch)({
       type:Actions.LOGIN_ERROR,
+      status:error
     })
   })
 

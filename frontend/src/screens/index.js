@@ -1,26 +1,26 @@
-import React, { PropTypes,useEffect,useState } from 'react';
-import Home from "./Home"
+import React from 'react';
+import Routes from "./Routes"
 import Login from "./Login"
-import {connect, useSelector} from "react-redux"
-
+import {useSelector} from "react-redux"
+import Ck from "./../components/TaskView/ckEditor"
 const Screens = (props) => {
-  const [logueado, setLogueado] = useState(null);
   const user=useSelector((state)=>state.login)
 
   //console.log(user);
   return (
-    <div style={{ backgroundColor: "#fff" }}>
+    <div style={{ backgroundColor: "#fff"}}>
       {user.sign_in ? (
-        <Home userInfo={user} />
+        <Routes userInfo={user} />
       ) : (
         <Login  />
       )}
     </div>
   );
-};
-
-Screens.propTypes = {
-
+/*  return(
+    <div>
+        <Ck/>
+    </div>
+  )*/
 };
 
 

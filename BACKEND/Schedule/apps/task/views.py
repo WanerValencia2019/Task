@@ -20,8 +20,8 @@ class TaskVIEW(ListCreateAPIView):
 class TaskA(ListCreateAPIView):
     queryset = Task.objects.all()
     serializer_class = TaskAPI
-    #permission_classes=(IsAuthenticated,)
-    #authentication_classes=(TokenAuthentication,)
+    permission_classes=(IsAuthenticated,)
+    authentication_classes=(TokenAuthentication,)
     def list(self, request):
         print(request.query_params)
         print(dir(request))
