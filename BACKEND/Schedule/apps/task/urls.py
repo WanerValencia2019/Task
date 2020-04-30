@@ -4,6 +4,6 @@ from .views import TaskView
 
 routes=routers.DefaultRouter()
 
-routes.register(r"list",TaskView,"tasks")
+routes.register(r"",TaskView,"tasks")
 
 urlpatterns = routes.urls

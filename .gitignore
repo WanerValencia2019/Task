@@ -2,3 +2,5 @@
 /BACKEND/Schedule/apps/users/__pycache__/
 /BACKEND/Schedule/apps/task/__pycache__/
 /BACKEND/Schedule/Schedule/__pycache__/
+/BACKEND/Schedule/apps/task/migrations/
+/BACKEND/Schedule/apps/users/migrations/

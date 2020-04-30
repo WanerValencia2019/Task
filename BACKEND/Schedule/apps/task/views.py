@@ -20,8 +20,8 @@ class TaskVIEW(ListCreateAPIView):
 class TaskA(ListCreateAPIView):
     queryset = Task.objects.all()
     serializer_class = TaskAPI
-    permission_classes=(IsAuthenticated,)
-    authentication_classes=(TokenAuthentication,)
+    #permission_classes=(IsAuthenticated,)
+    #authentication_classes=(TokenAuthentication,)
     def list(self, request):
         print(request.query_params)
         print(dir(request))
@@ -29,15 +29,20 @@ class TaskA(ListCreateAPIView):
         #token=Token.objects.get(user=request.user).key
         #self.headers.setdefault("Authorization",{"Token":token})
         # Note the use of `get_queryset()` instead of `self.queryset`
-        queryset = Task.objects.filter(created_by=id)
+        queryset = Task.objects.filter(created_by=id).order_by('date').reverse()
+        #print(dir(queryset))
         serializer = TaskAPI(queryset, many=True)
         return Response(serializer.data)
 class CreateTaskView(APIView):
+    #permission_classes=(IsAuthenticated,)
+    #authentication_classes=(TokenAuthentication,)
     def post(self,request):
         serializer=TaskAPI(data=request.data)
         serializer.is_valid(raise_exception=True)
         print(request.data.get('title'))
         data=serializer.data
+        task=Task.objects.create(**data)
+        task.save()
 
         return Response(serializer.data,status.HTTP_201_CREATED)
 class TaskView(viewsets.ModelViewSet):
