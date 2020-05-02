@@ -18,7 +18,7 @@ export const getLogin = (username, password) => async (dispatch) => {
       });
     })
     .catch((error) => {
-      //console.log(error);
+      console.log(error.Error);
       return dispatch({
         type: Actions.LOGIN_ERROR,
         status: error,

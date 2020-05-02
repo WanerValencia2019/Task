@@ -1,10 +1,18 @@
 import React, { useState, useEffect } from "react";
 //import LoginForm from "../../components/LoginForm";
 import { connect } from "react-redux";
-import { Input, TextField, Button, Typography, Paper } from "@material-ui/core";
+import {
+  Input,
+  TextField,
+  Button,
+  Typography,
+  Paper,
+  Divider,
+} from "@material-ui/core";
 import { getLogin } from "./actionCreators";
 import useStyles from "./styles";
 import { Grid } from "@material-ui/core";
+
 
 function Login(props) {
   const signin = async (username, password) => {
@@ -19,7 +27,7 @@ function Login(props) {
   const [passwordErrorText, setPasswordErrorText] = useState("");
   //console.log(props);
 
-  const validatePassword = value => {
+  const validatePassword = (value) => {
     setPassword(value);
     console.log(value.length);
     if (value.length < 8) {
@@ -44,20 +52,20 @@ function Login(props) {
           justify="center"
         >
           <Grid style={{}} item>
-            <Typography variant="h5">Bienvenido A Seven Task</Typography>
+            <Typography variant="h5">Bienvenido</Typography>
           </Grid>
 
-          <Grid item>
+          <Grid item container direction="column">
             <TextField
               required
               label="Nombre de usuario"
               placeholder="Nombre de usuario"
               className={styles.inputEmail}
               value={username}
-              onChange={e => setUsername(e.target.value)}
+              onChange={(e) => setUsername(e.target.value)}
             />
           </Grid>
-          <Grid item>
+          <Grid item container direction="column" >
             <TextField
               required
               className={styles.inputPassword}
@@ -67,26 +75,33 @@ function Login(props) {
               value={password}
               helperText={passwordErrorText}
               type="password"
-              onChange={e => validatePassword(e.target.value)}
+              onChange={(e) => validatePassword(e.target.value)}
             />
+            <Typography onClick={()=>console.log("change your password")} variant="caption" style={{color:"#a23432",cursor:"pointer",marginTop:4,fontSize:13}}>¿Has olvidado tu contraseña? </Typography>
           </Grid>
           <Grid item>
             <Button
               variant="contained"
               color="primary"
               onClick={() => signin(username, password)}
+              fullwidth="true"
             >
               Iniciar sesión
             </Button>
+          </Grid>
+          <Divider />
+          <Grid item container justify="center" direction="row">
+            <Typography style={{fontSize:14}} variant="subtitle2">¿Todavía no tienes una cuenta? </Typography>
+            <Typography variant="subtitle2" style={{fontSize:14,marginLeft:5, color:"blue",cursor:"pointer"}} onClick={() =>console.log("registrando")}>Regístrate</Typography>
           </Grid>
         </Grid>
       </Paper>
     </Grid>
   );
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    login: state.login
+    login: state.login,
   };
 };
 
