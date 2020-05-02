@@ -18,7 +18,11 @@ function Routes(props) {
   //console.log(userInfo);
   return (
     <Router>
-      <NavBar logout={props.logout} />
+      <NavBar
+        first_name={userInfo.user.first_name}
+        last_name={userInfo.user.last_name}
+        logout={props.logout}
+      />
       <div className={classes.content}>
         <Switch>
           <Route path="/" exact>
@@ -26,7 +30,7 @@ function Routes(props) {
           </Route>
 
           <Route path="/configuraciones">
-            <Configuration />
+            <Configuration user={userInfo.user} />
           </Route>
 
           <Route path="/task/update/:id">

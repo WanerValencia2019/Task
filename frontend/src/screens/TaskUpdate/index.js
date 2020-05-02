@@ -37,7 +37,7 @@ function TaskUpdate(props) {
     setOpen(false);
   };
   const update = async () => {
-    await dispatch(update_task(task.id, idUser, title, description, token));
+    await dispatch(update_task(id, idUser, token, title, description));
     history.push('/');
   };
   console.log(props);

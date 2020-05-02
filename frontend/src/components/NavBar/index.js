@@ -7,7 +7,23 @@ import InputBase from '@material-ui/core/InputBase';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import { Menu, MenuItem, Divider, List, Drawer } from '@material-ui/core';
+import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
+import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
+import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
+import SettingsIcon from '@material-ui/icons/Settings';
+import LanguageIcon from '@material-ui/icons/Language';
+
+import {
+  Menu,
+  MenuItem,
+  Divider,
+  List,
+  Drawer,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+} from '@material-ui/core';
+
 import SearchIcon from '@material-ui/icons/Search';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import useStyles from './styles';
@@ -17,7 +33,7 @@ import { withRouter } from 'react-router';
 
 function NavBar(props) {
   //console.log(props);
-  const { logout, history } = props;
+  const { logout, history, first_name, last_name } = props;
   const classes = useStyles();
   const theme = useTheme();
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -37,6 +53,33 @@ function NavBar(props) {
   const handleMenuClose = () => {
     setAnchorEl(null);
     setIsMenuOpen(false);
+  };
+  const navigateTask = (index) => {
+    switch (index) {
+      case 0:
+        history.push('/');
+        break;
+      case 1:
+        history.push('/nuevaTarea');
+        break;
+      default:
+        history.push('/');
+        break;
+    }
+  };
+  const navigateConfig = (index) => {
+    console.log(index);
+    switch (index) {
+      case 0:
+        history.push('/configuraciones');
+        break;
+      case 1:
+        // history.push('/configuraciones');
+        break;
+      default:
+        //history.push('/configuraciones');
+        break;
+    }
   };
 
   const renderMenuProfile = (
@@ -79,12 +122,58 @@ function NavBar(props) {
       </div>
       <Divider />
       <List>
-        <MenuItem onClick={() => history.push('/')}>DashBoard</MenuItem>
-        <MenuItem onClick={() => history.push('/nuevaTarea')}>
-          Nueva tarea
-        </MenuItem>
+        <h3 style={{ padding: 10 }}>Tareas</h3>
+        {['Inicio', 'Crear Tarea'].map((text, i) => (
+          <ListItem
+            className={classes.cursor_pointer}
+            key={i}
+            onClick={() => navigateTask(i)}
+          >
+            <ListItemIcon>
+              {i == 0 ? <HomeOutlinedIcon /> : <AddOutlinedIcon />}{' '}
+            </ListItemIcon>
+            <ListItemText primary={text} />
+          </ListItem>
+        ))}
       </List>
       <Divider />
+      <List>
+        <h4 style={{ padding: 10 }}>Configuración y privacidad</h4>
+        {['Cuenta', 'Idioma'].map((text, i) => (
+          <ListItem
+            className={classes.cursor_pointer}
+            key={i}
+            onClick={() => navigateConfig(i)}
+          >
+            <ListItemIcon>
+              {i == 0 ? <SettingsIcon /> : <LanguageIcon />}{' '}
+            </ListItemIcon>
+            <ListItemText primary={text} />
+          </ListItem>
+        ))}
+      </List>
+      <Divider />
+      <List>
+        {['Cerrar Sesión'].map((text, i) => (
+          <ListItem
+            className={classes.cursor_pointer}
+            key={i}
+            onClick={() => logout()}
+          >
+            <ListItemIcon>
+              {i == 0 ? (
+                <PowerSettingsNewIcon color="secondary" />
+              ) : (
+                <LanguageIcon />
+              )}{' '}
+            </ListItemIcon>
+            <ListItemText
+              style={{ color: i == 0 ? 'red' : 'black' }}
+              primary={text}
+            />
+          </ListItem>
+        ))}
+      </List>
     </Drawer>
   );
 
@@ -105,10 +194,7 @@ function NavBar(props) {
             <MenuIcon />
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
-            Only-Tasks
-          </Typography>
-          <Typography className={classes.title} variant="h6" noWrap>
-            DASHBOARD
+            ONLY-TASKS
           </Typography>
           {/*
           <div className={classes.search}>
@@ -125,15 +211,21 @@ function NavBar(props) {
             />
           </div>
         */}
-
-          <IconButton
-            onClick={handleProfileMenuOpen}
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="open profile menu"
+          <Typography
+            className={classes.title}
+            variant="button"
+            className={(classes.menuButton, classes.cursor_pointer)}
+            onClick={() => navigateConfig(0)}
           >
-            <MoreIcon />
-          </IconButton>
+            {first_name} {last_name}
+          </Typography>
+
+          <PowerSettingsNewIcon
+            onClick={() => logout()}
+            color="secondary"
+            className={classes.cursor_pointer}
+            style={{ paddingLeft: 25 }}
+          />
         </Toolbar>
       </AppBar>
       {drawer}

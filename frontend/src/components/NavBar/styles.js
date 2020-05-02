@@ -7,6 +7,9 @@ export default makeStyles((theme) => ({
   menuButton: {
     marginRight: theme.spacing(2),
   },
+  cursor_pointer: {
+    cursor: 'pointer',
+  },
   moreVert: {},
   active: {
     clear: 'both',

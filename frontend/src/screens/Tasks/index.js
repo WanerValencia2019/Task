@@ -7,7 +7,7 @@ import TabsNav from '../../components/Tabs';
 import { withRouter } from 'react-router';
 import Modal from './../../litteComponents/Modal/index.js';
 const Tasks = (props) => {
-  const { getTask, idUser, token } = props;
+  const { getTask, idUser, token,history } = props;
   const { tasks } = props.tasks;
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
@@ -37,7 +37,10 @@ const Tasks = (props) => {
                 completed={task.completed}
                 favorite={task.favorite}
                 id={task.id}
+                idUser={idUser}
+                token={token}
                 remove={() => deletet(task.id, token)}
+                history={history}
               />
             </Grid>
           ))

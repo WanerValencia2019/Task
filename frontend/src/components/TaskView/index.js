@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import {
   Grid,
   Paper,
@@ -19,19 +19,31 @@ import 'moment/locale/es';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import StarBorderIcon from '@material-ui/icons/StarBorder';
-import StarIcon from '@material-ui/icons/Star';
 import { NavLink } from 'react-router-dom';
-import { formatDay, formatMonth } from './utils';
 import Modal from './../../litteComponents/Modal/index.js';
+import { useDispatch } from 'react-redux';
+import { update_task } from './../../screens/TaskUpdate/actionCreator.js';
 
 const TaskView = (props) => {
-  const { title, description, date, completed, favorite, remove, id } = props;
+  const {
+    title,
+    description,
+    date,
+    completed,
+    favorite,
+    remove,
+    id,
+    idUser,
+    token,
+    history
+  } = props;
   const fecha = new Date(date);
-  const [isCompleted, setIsCompleted] = useState(completed ? completed : false);
+  const [isCompleted, setIsCompleted] = useState(completed);
   console.log('esta completa' + isCompleted);
-  const [isFavorite, setIsFavorite] = useState(favorite ? favorite : false);
+  const [isFavorite, setIsFavorite] = useState(favorite);
   const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
+
 
   //console.log(fecha.toString());
   const classes = styles();
@@ -53,6 +65,44 @@ const TaskView = (props) => {
   };
 
   const path = `/task/update/${id}`;
+
+  const changeComplete=async(e)=>{
+      let value=e.target.checked
+      console.log(e.target.checked)
+      console.log(`hola entra a preferences ${isCompleted} ${isFavorite}`);
+    await dispatch(
+      update_task(
+        id,
+        idUser,
+        token,
+        title,
+        description,
+        e.target.checked,
+        isFavorite
+      )
+    );
+    await setIsCompleted(value)
+    await history.push("/")
+  }
+
+  const changeFavorite = async (e) => {
+    let value=e.target.checked
+      console.log(e.target.checked)
+      console.log(`hola entra a preferences ${isCompleted} ${isFavorite}`);
+    await dispatch(
+      update_task(
+        id,
+        idUser,
+        token,
+        title,
+        description,
+        isFavorite,
+        e.target.checked
+      )
+    );
+    await setIsFavorite(value)
+    await history.push("/")
+  };
 
   const optionTask = (
     <Menu
@@ -96,14 +146,13 @@ const TaskView = (props) => {
         </CardContent>
         <CardActions disableSpacing>
           <IconButton
-            //onClick={() => alert("agregando a favoritos")}
             text="hla"
-            aria-label="add-favorito"
+           inputProps={{"aria-label":"add-favorito"}} 
           >
             <Checkbox
               icon={<FavoriteBorderOutlinedIcon />}
               checkedIcon={<FavoriteIcon />}
-              onChange={() => setIsFavorite((prevCompleted) => !prevCompleted)}
+              onChange={changeFavorite}
               color="secondary"
               value={isFavorite}
               checked={isFavorite}
@@ -111,13 +160,13 @@ const TaskView = (props) => {
             />
           </IconButton>
           <IconButton
-            onClick={() => alert('agregando a completos')}
+            //onClick={() => preferences()}
             style={{ marginLeft: 'auto' }}
           >
             <Checkbox
               value={isCompleted}
               checked={isCompleted}
-              onChange={() => setIsCompleted((prevCompleted) => !prevCompleted)}
+              onChange={changeComplete}
               color="primary"
               name="checkbox-completed"
             />
