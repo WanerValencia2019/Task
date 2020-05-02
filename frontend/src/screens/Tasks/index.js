@@ -9,9 +9,9 @@ import Modal from './../../litteComponents/Modal/index.js';
 const Tasks = (props) => {
   const { getTask, idUser, token,history } = props;
   const { tasks } = props.tasks;
-  const [open, setOpen] = useState(false);
+  console.log(history)
   const dispatch = useDispatch();
-  console.log(props.match.url == '/');
+  //console.log(props.match.url == '/');
   useEffect(() => {
     async function getData() {
       await getTask(idUser, token);
@@ -19,9 +19,10 @@ const Tasks = (props) => {
     getData();
   }, []);
   const deletet = (id, token) => {
-    setOpen(true);
     return dispatch(deleteTask(id, token));
   };
+  
+
   return (
     <div style={{ margin: 10 }}>
       <h4>Listando Tareas</h4>

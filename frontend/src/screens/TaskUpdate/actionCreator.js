@@ -25,6 +25,7 @@ export const update_task = (
 			},
 		})
 		.then((res) => {
+			console.log(res.data);
 			return dispatch({
 				type: Actions.UPDATE_SUCESS,
 				data: res.data,

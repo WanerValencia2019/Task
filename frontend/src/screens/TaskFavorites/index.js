@@ -22,10 +22,10 @@ const TaskFavorites = (props) => {
         La maravillosa posibilidad de preferir lo que nos interesa, es un arma
         muy poderosa
       </h4>
-      <Grid container direction="row" justify="space-around" spacing={2}>
+      <Grid container direction="row" justify="center" spacing={2}>
         {tasks ? (
           tasks.map((task, i) => (
-            <Grid key={i} item sm={3} xs={12}>
+            <Grid key={i} item sm={6} md={4} lg={3} xs={12}>
               <TaskView
                 key={i}
                 title={task.title}

@@ -43,6 +43,7 @@ const TaskView = (props) => {
   const [isFavorite, setIsFavorite] = useState(favorite);
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
+  const [isChecked,setIsChecked]=useState(isCompleted)
 
 
   //console.log(fecha.toString());
@@ -68,8 +69,10 @@ const TaskView = (props) => {
 
   const changeComplete=async(e)=>{
       let value=e.target.checked
+      setIsChecked(e.target.checked)
       console.log(e.target.checked)
       console.log(`hola entra a preferences ${isCompleted} ${isFavorite}`);
+      setIsCompleted(value)
     await dispatch(
       update_task(
         id,
@@ -81,8 +84,7 @@ const TaskView = (props) => {
         isFavorite
       )
     );
-    await setIsCompleted(value)
-    await history.push("/")
+
   }
 
   const changeFavorite = async (e) => {
@@ -101,7 +103,7 @@ const TaskView = (props) => {
       )
     );
     await setIsFavorite(value)
-    await history.push("/")
+    history.push("/")
   };
 
   const optionTask = (
@@ -145,10 +147,7 @@ const TaskView = (props) => {
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
-          <IconButton
-            text="hla"
-           inputProps={{"aria-label":"add-favorito"}} 
-          >
+
             <Checkbox
               icon={<FavoriteBorderOutlinedIcon />}
               checkedIcon={<FavoriteIcon />}
@@ -157,25 +156,23 @@ const TaskView = (props) => {
               value={isFavorite}
               checked={isFavorite}
               name="checkbox-favorite"
+              inputProps={{"aria-label":"add-favorito"}} 
             />
-          </IconButton>
-          <IconButton
-            //onClick={() => preferences()}
-            style={{ marginLeft: 'auto' }}
-          >
+          
             <Checkbox
+             style={{ marginLeft: 'auto' }}
               value={isCompleted}
               checked={isCompleted}
               onChange={changeComplete}
               color="primary"
               name="checkbox-completed"
             />
-            {completed ? (
+            {isChecked ? (
               <span style={{ fontSize: 13, color: '#000' }}>Completa</span>
             ) : (
               <span style={{ fontSize: 13, color: '#000' }}>Completar</span>
             )}
-          </IconButton>
+         
         </CardActions>
         {optionTask}
       </Card>
