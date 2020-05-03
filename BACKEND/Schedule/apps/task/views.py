@@ -8,7 +8,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework import status
 from rest_framework import viewsets
 # Create your views here.
-from .serializers import TaskAPI
+from .serializers import TaskAPI,TaskSerializer
 from .models import Task
 
 class TaskVIEW(ListCreateAPIView):
@@ -17,6 +17,7 @@ class TaskVIEW(ListCreateAPIView):
         #permission_classes=(IsAuthenticated,)
         #authentication_classes=(TokenAuthentication,)
 
+#VIEW QUE RETORNA LAS TAREAS DE ACUERDO A EL ID DE EL USUARIO
 class TaskA(ListCreateAPIView):
     queryset = Task.objects.all()
     serializer_class = TaskAPI
@@ -33,20 +34,25 @@ class TaskA(ListCreateAPIView):
         #print(dir(queryset))
         serializer = TaskAPI(queryset, many=True)
         return Response(serializer.data)
+
+#CREA LA TAREA 
 class CreateTaskView(APIView):
-    #permission_classes=(IsAuthenticated,)
-    #authentication_classes=(TokenAuthentication,)
+    permission_classes=(IsAuthenticated,)
+    authentication_classes=(TokenAuthentication,)
     def post(self,request):
         serializer=TaskAPI(data=request.data)
         serializer.is_valid(raise_exception=True)
-        print(request.data.get('title'))
-        data=serializer.data
-        task=Task.objects.create(**data)
-        task.save()
+        #print(request.data.get('title'))
+        #data=serializer.validate_data
+        #print(serializer.validate)
+        #task=Task.objects.create(**data)
+        serializer.save()
 
         return Response(serializer.data,status.HTTP_201_CREATED)
+
+#VISTAS DONDE VAMOS A RECIBIR, LA ACTUALIZACIÓN Y UPDATE DE LAS TAREAS
 class TaskView(viewsets.ModelViewSet):
     queryset=Task.objects.all()
-    serializer_class=TaskAPI
-    #permission_classes=(IsAuthenticated,)
-    #authentication_classes=(TokenAuthentication,)
+    serializer_class=TaskSerializer
+    permission_classes=(IsAuthenticated,)
+    authentication_classes=(TokenAuthentication,)
