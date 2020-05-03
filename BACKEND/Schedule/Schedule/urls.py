@@ -20,12 +20,9 @@ from apps.task import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path(r'api/register',api.CreateUserVIEW.as_view(),name="users"),
-    path(r"api/task/self/delete/",include('apps.task.urls'),name="tasks"),
-    path(r"api/task/self/update/",include('apps.task.urls'),name="taskss"),
-    path(r"api/task/list/",views.TaskA.as_view(),name="tasks2"),
-    path(r"api/task/create/",views.CreateTaskView.as_view(),name="tasks"),
-    path(r'api/login',api.LoginView.as_view(),name="login"),
-    path(r'api/logout',api.LogoutView.as_view(),name="logout"),
+    path('api/v1/auth/',include('apps.users.urls'),name="auth"),
+    path('api/v1/task/',include('apps.task.urls'),name="task")
     #path(r'api/login2',obtain_auth_token,name="login2"),
 ]
+
+
