@@ -1,12 +1,13 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .serializers import CreateUserSerializer, LoginSerializer, UserSerializer
+from .serializers import * 
 from rest_framework.authtoken.models import Token
-#from rest_framework.authentication import
+from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import login, logout
+from django.contrib.auth.models import User
 from rest_framework import status
-from rest_framework.generics import GenericAPIView
+from rest_framework.generics import GenericAPIView,UpdateAPIView
 #from django.views.decorators.csrf import csrf_protect
 from django.middleware.csrf import get_token
 #from django.contrib.auth import login
@@ -24,6 +25,7 @@ class CreateUserVIEW(APIView):
         else:
             return Response(serializer.errors,status.HTTP_400_BAD_REQUEST)
 
+#LOGIN
 class LoginView(GenericAPIView):
     serializer_class=LoginSerializer
     def post(self,request):
@@ -43,7 +45,49 @@ class LoginView(GenericAPIView):
 
 class LogoutView(APIView):
     permission_classes=(IsAuthenticated,)
-    def get(self,request):
+    authentication_classes=(TokenAuthentication,)
+    def post(self,request):
+        self.headers.setdefault("X-CSRFToken",get_token(request))
         user=request.user
         logout(request)
-        Response({"User":"cerrado"},status.HTTP_200_OK)
+        user.auth_token.delete()
+        return Response({"User":"Sesión terminada"},status.HTTP_200_OK)
+
+#CAMBIANDO LA CONTRASEÑA DEL USUARIO
+class ChangePasswordView(UpdateAPIView):
+    serializer_class=ChangePasswordSerializer
+    model=User
+    permission_classes=(IsAuthenticated,)
+    authentication_classes=(TokenAuthentication,)
+    def get_object(self,queryset=None):
+        user=self.request.user
+        return user
+#CAMBIANDO EL NOMBRE DEL USUARIO
+
+
+class ChangeNamesView(UpdateAPIView):
+    serializer_class=ChangeNamesSerializer
+    model=User
+    permission_classes=(IsAuthenticated,)
+    authentication_classes=(TokenAuthentication,)
+    def get_object(self,queryset=None):
+        user=self.request.user
+        return user
+
+class ChangeUsernameView(UpdateAPIView):
+    serializer_class=ChangeUsernameSerializer
+    model=User
+    permission_classes=(IsAuthenticated,)
+    authentication_classes=(TokenAuthentication,)
+    def get_object(self,queryset=None):
+        user=self.request.user
+        return user
+
+class ChangeEmailView(UpdateAPIView):
+    serializer_class=ChangeEmailSerializer
+    model=User
+    permission_classes=(IsAuthenticated,)
+    authentication_classes=(TokenAuthentication,)
+    def get_object(self,queryset=None):
+        user=self.request.user
+        return user

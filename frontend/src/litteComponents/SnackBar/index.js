@@ -19,7 +19,7 @@ const SnackBarBase = (props) => {
       onClose={() => onClose}
       message={message}
     >
-      <Alert variant="filled" onClose={() => onClose()} everity={type}>
+      <Alert variant="filled" onClose={() => onClose()} severity={type}>
         {' '}
         {message}
       </Alert>
@@ -36,6 +36,6 @@ SnackBarBase.propTypes = {
 };
 SnackBarBase.defaultProps = {
   open: false,
-  type: 'sucess',
+  type: 'error',
 };
 export default SnackBarBase;

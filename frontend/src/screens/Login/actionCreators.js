@@ -10,7 +10,7 @@ export const getLogin = (username, password) => async (dispatch) => {
   axios
     .post('http://127.0.0.1:8000/api/login', params)
     .then((res) => {
-      //console.log(res);
+      console.log(res);
       return dispatch({
         type: Actions.LOGIN_SUCCES,
         user: res.data.User,
@@ -18,10 +18,10 @@ export const getLogin = (username, password) => async (dispatch) => {
       });
     })
     .catch((error) => {
-      console.log(error.Error);
+      console.log(error.response.data.message[0]);
       return dispatch({
         type: Actions.LOGIN_ERROR,
-        status: error,
+        message: error.response.data.message[0],
       });
     });
 };

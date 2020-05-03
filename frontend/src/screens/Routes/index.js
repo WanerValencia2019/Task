@@ -10,7 +10,7 @@ import { Grid } from '@material-ui/core';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import TabsNav from '../../components/Tabs';
 import TaskUpdate from './../TaskUpdate/index.js';
-
+import Register from "./../Register/index.js"
 import styles from './styles';
 function Routes(props) {
   const { userInfo } = props;
@@ -41,6 +41,12 @@ function Routes(props) {
             <Grid className={classes.gridNewTask} container>
               <TaskCreate idUser={userInfo.user.id} token={userInfo.token} />
             </Grid>
+          </Route>
+          <Route path="/register" exact>
+            <Register/>
+          </Route>
+           <Route path="">
+            <div><h2>Pagina no encontrada</h2></div>
           </Route>
         </Switch>
       </div>
