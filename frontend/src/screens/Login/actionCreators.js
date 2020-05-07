@@ -1,5 +1,5 @@
-import axios from 'axios';
-import Actions from '../../redux/actionTypes';
+import axios from "axios";
+import Actions from "../../redux/actionTypes";
 
 export const getLogin = (username, password) => async (dispatch) => {
   //console.log(username,password);
@@ -8,7 +8,7 @@ export const getLogin = (username, password) => async (dispatch) => {
     password: password,
   };
   axios
-    .post('http://127.0.0.1:8000/api/login', params)
+    .post("http://127.0.0.1:8000/api/v1/auth/login/", params)
     .then((res) => {
       console.log(res);
       return dispatch({
@@ -25,8 +25,23 @@ export const getLogin = (username, password) => async (dispatch) => {
       });
     });
 };
-export const logout = () => {
-  return {
-    type: Actions.SIGN_OFF,
+export const logout = (token) => (dispatch, getState) => {
+  console.log(getState);
+
+  const config = {
+    headers: {
+      Authorization: `Token ${token}`,
+    },
   };
+  axios
+    .post("http://127.0.0.1:8000/api/v1/auth/logout/", config)
+    .then((res) => {
+      return dispatch({
+        type: Actions.SIGN_OFF,
+      })
+    });
+    .catch((err)=>{
+      console.log(error.response)
+    })
+
 };
