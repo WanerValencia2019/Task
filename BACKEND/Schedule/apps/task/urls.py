@@ -39,9 +39,9 @@ tasks => Array
 		response:
 			task
 	List:
-		url:"api/v1/task/list/"
-		get:
-			idUser
+		url:"api/v1/task/list/:idUser"
+		method:
+			 get
 		Headers:
 			Authorization - token
 		response
