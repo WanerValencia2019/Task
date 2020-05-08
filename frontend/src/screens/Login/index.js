@@ -13,8 +13,9 @@ import { getLogin } from "./actionCreators";
 import useStyles from "./styles";
 import { Grid } from "@material-ui/core";
 import SnackBarBase from "./../../litteComponents/SnackBar/index.js";
-
+import {Redirect} from "react-router-dom"
 function Login(props) {
+  const {isAuthenticated}= props
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [username, setUsername] = useState("");
@@ -60,6 +61,9 @@ function Login(props) {
   };*/
 
   const styles = useStyles();
+  if(isAuthenticated){
+    return <Redirect to="/" />
+  }
   return (
     <>
       <Grid container className={styles.container}>

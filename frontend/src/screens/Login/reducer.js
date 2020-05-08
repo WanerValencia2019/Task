@@ -5,7 +5,7 @@ const initialState = {
   user:null,
   error:false,
   token:null,
-  sign_in:false,
+  isAuthenticated:false,
   message:null
 }
 
@@ -13,12 +13,12 @@ const initialState = {
 function Login(state = initialState, action) {
   switch (action.type) {
     case Actions.LOGIN_SUCCES:
-      return {...state,user:action.user,token:action.token,sign_in:true}
+      return {...state,user:action.user,token:action.token,isAuthenticated:true}
     case Actions.LOGIN_ERROR:
       return {...state,error:true,message:action.message};
       break;
     case Actions.SIGN_OFF:
-      return {...state,sign_in:false,user:null,token:null,error:false}
+      return {...state,isAuthenticated:false,user:null,token:null,error:false}
       break;
     default:
       return state;

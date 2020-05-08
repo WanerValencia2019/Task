@@ -1,15 +1,15 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Route, Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
 
-const PrivateRoutes = ({ component: Component, sign_in, ...rest }) => (
+const PrivateRoutes = ({ component: Component, isAuthenticated, ...rest }) => (
 	<Route
 		{...rest}
 		render={(params) => {
-			if (5!=5) {
+			if (isAuthenticated) {
 				return <Component {...params} />;
 			}else{
-				return <div><h1>Loading</h1></div>;
+				return <Redirect  to="/login" />
 			}
 		}}
 	/>

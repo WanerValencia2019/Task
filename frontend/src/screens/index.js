@@ -5,9 +5,8 @@ import { useSelector } from 'react-redux';
 
 const Screens = (props) => {
 	const user = useSelector((state) => state.login);
-
 	//console.log(user);
-	return <div>{user.sign_in ? <Routes userInfo={user} /> : <Login />}</div>;
+	return <Routes userInfo={user} />
 };
 
 export default Screens;

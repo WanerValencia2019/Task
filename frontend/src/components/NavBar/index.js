@@ -225,7 +225,7 @@ function NavBar(props) {
             onClick={() => logout(token)}
             color="secondary"
             className={classes.cursor_pointer}
-            style={{ paddingLeft: 25 }}
+            style={{ marginLeft: 10 }}
           />
         </Toolbar>
       </AppBar>
