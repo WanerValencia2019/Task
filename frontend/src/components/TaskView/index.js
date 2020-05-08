@@ -1,4 +1,5 @@
 import React, { useState,useEffect } from 'react';
+import PropTypes from "prop-types"
 import {
   Grid,
   Paper,
@@ -23,6 +24,7 @@ import { NavLink } from 'react-router-dom';
 import Modal from './../../litteComponents/Modal/index.js';
 import { useDispatch } from 'react-redux';
 import { update_task } from './../../screens/TaskUpdate/actionCreator.js';
+
 
 const TaskView = (props) => {
   const {
@@ -156,9 +158,9 @@ const TaskView = (props) => {
               value={isFavorite}
               checked={isFavorite}
               name="checkbox-favorite"
-              inputProps={{"aria-label":"add-favorito"}} 
+              inputProps={{"aria-label":"add-favorito"}}
             />
-          
+
             <Checkbox
              style={{ marginLeft: 'auto' }}
               value={isCompleted}
@@ -172,7 +174,7 @@ const TaskView = (props) => {
             ) : (
               <span style={{ fontSize: 13, color: '#000' }}>Completar</span>
             )}
-         
+
         </CardActions>
         {optionTask}
       </Card>
@@ -181,7 +183,7 @@ const TaskView = (props) => {
         open={open}
         accept={remove}
         title="Advertencia"
-        message="Estas seguro que deseas eliminar está tarea?"
+        description="Estas seguro que deseas eliminar está tarea?"
         message_accept="Eliminar"
         message_disclaim="Rechazar"
         color_accept="red"
@@ -190,5 +192,19 @@ const TaskView = (props) => {
     </>
   );
 };
+
+
+TaskView.propTypes = {
+  token:PropTypes.string.isRequired,
+  idUser:PropTypes.number.isRequired,
+  id:PropTypes.number.isRequired,
+  title:PropTypes.string.isRequired,
+  description:PropTypes.string.isRequired,
+  completed:PropTypes.bool.isRequired,
+  favorite:PropTypes.bool.isRequired,
+  date:PropTypes.string.isRequired,
+  remove:PropTypes.func.isRequired,
+  history:PropTypes.object.isRequired,
+}
 
 export default TaskView;

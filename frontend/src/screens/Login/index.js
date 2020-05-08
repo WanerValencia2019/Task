@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types"
 //import LoginForm from "../../components/LoginForm";
 import { connect } from "react-redux";
 import {
@@ -14,8 +15,11 @@ import useStyles from "./styles";
 import { Grid } from "@material-ui/core";
 import SnackBarBase from "./../../litteComponents/SnackBar/index.js";
 import {Redirect} from "react-router-dom"
+import {withRouter} from "react-router"
+
+
 function Login(props) {
-  const {isAuthenticated}= props
+  const {isAuthenticated,history,dispatch,login}= props
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [username, setUsername] = useState("");
@@ -24,13 +28,14 @@ function Login(props) {
   const [passwordErrorText, setPasswordErrorText] = useState("");
 
   const signin = async (e) => {
+
     e.preventDefault();
     //await console.log(props);
-    await props.dispatch(getLogin(username, password));
+    await dispatch(getLogin(username, password));
 
-    if (props.login.error) {
+    if (login.error) {
       setOpen(true);
-      setMessage(props.login.message);
+      setMessage(login.message);
       setTimeout(() => {
         setOpen(false);
       }, 2500);
@@ -143,7 +148,7 @@ function Login(props) {
                     color: "blue",
                     cursor: "pointer",
                   }}
-                  onClick={() => console.log("registrando")}
+                  onClick={() => history.push('/register')}
                 >
                   Regístrate
                 </Typography>
@@ -168,4 +173,11 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(Login);
+Login.propTypes = {
+  isAuthenticated:PropTypes.bool.isRequired,
+  history:PropTypes.string.isRequired,
+  dispatch:PropTypes.func.isRequired,
+  login:PropTypes.object.isRequired,
+}
+
+export default connect(mapStateToProps)(withRouter(Login));

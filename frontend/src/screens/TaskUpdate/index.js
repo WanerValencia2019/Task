@@ -42,9 +42,9 @@ function TaskUpdate(props) {
   };
   console.log(props);
   return (
-    <Grid container direction="column">
+    <Grid container  direction="column">
       <Paper className={classes.paper}>
-        <Typography style={{ textAlign: 'center' }} variant="h5">
+        <Typography style={{ textAlign: 'center',marginTop:20}} variant="h5">
           Actualizar Tarea
         </Typography>
         <Grid item container direction="column">
@@ -91,8 +91,16 @@ function TaskUpdate(props) {
     </Grid>
   );
 }
+
+
 TaskUpdate.propTypes = {
   token: PropTypes.string.isRequired,
+  idUser:PropTypes.number.isRequired,
+  match:PropTypes.object.isRequired,
+  //id proveniente del match.params.id
+  //id:PropTypes.number.isRequired,
+  //histoy de  react-router
+  history:PropTypes.object.isRequired,
 };
 
 export default withRouter(TaskUpdate);

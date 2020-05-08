@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from "prop-types"
 import { connect, useDispatch } from 'react-redux';
 import { deleteTask,getTask } from './../Tasks/actionCreators.js';
 import TaskView from './../../components/TaskView';
-import { Grid, Paper } from '@material-ui/core';
+import { Grid, Paper,Container } from '@material-ui/core';
 import TabsNav from '../../components/Tabs';
 import { withRouter } from 'react-router';
 
@@ -21,11 +22,11 @@ const TaskFavorites = (props) => {
      const deletet = (id, token) => {
     return dispatch(deleteTask(id, token));
   };
-  
-   
+
+
   const show=tasks.filter(t=>t.favorite==true)
   return (
-    <div style={{ margin: 10 }}>
+    <Container style={{ margin: 10 }}>
       <h4>
         La maravillosa posibilidad de preferir lo que nos interesa, es un arma
         muy poderosa
@@ -45,7 +46,7 @@ const TaskFavorites = (props) => {
                 idUser={idUser}
                 token={token}
                 remove={() => deletet(task.id, token)}
-               
+
               />
             </Grid>
           ))
@@ -53,9 +54,16 @@ const TaskFavorites = (props) => {
           <p>No hay tareas completas</p>
         )}
       </Grid>
-    </div>
+    </Container>
   );
 };
+
+TaskFavorites.propTypes = {
+  getTask:PropTypes.func.isRequired,
+  idUser:PropTypes.number.isRequired,
+  token:PropTypes.string.isRequired,
+  tasks:PropTypes.object.isRequired,
+}
 
 const mapStateToProps = (state) => {
   return {

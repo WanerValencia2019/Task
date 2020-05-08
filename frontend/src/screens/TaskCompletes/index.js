@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from "prop-types"
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { deleteTask,getTask } from './../Tasks/actionCreators.js';
 import TaskView from './../../components/TaskView';
-import { Grid, Paper } from '@material-ui/core';
+import { Grid, Paper,Container } from '@material-ui/core';
 import TabsNav from '../../components/Tabs';
 import { withRouter } from 'react-router';
 
@@ -21,11 +22,11 @@ const TaskCompletes = (props) => {
      const deletet = (id, token) => {
     return dispatch(deleteTask(id, token));
   };
-  
+
 
   const show=tasks.filter(t=>t.completed==true)
   return (
-    <div style={{ margin: 10 }}>
+    <Container style={{ margin: 10 }}>
       <h4>Listando Tareas</h4>
       <Grid container direction="row" direction="row" justify="center" spacing={2}>
         {show ? (
@@ -42,7 +43,7 @@ const TaskCompletes = (props) => {
                 idUser={idUser}
                 token={token}
                 remove={() => deletet(task.id, token)}
-               
+
               />
             </Grid>
           ))
@@ -50,7 +51,7 @@ const TaskCompletes = (props) => {
           <p>No hay tareas completas</p>
         )}
       </Grid>
-    </div>
+    </Container>
   );
 };
 
@@ -60,5 +61,12 @@ const mapStateToProps = (state) => {
   };
 };
 const mapDispatchToProps = { getTask };
+
+TaskCompletes.propTypes = {
+  getTask:PropTypes.func.isRequired,
+  idUser:PropTypes.number.isRequired,
+  token:PropTypes.string.isRequired,
+  tasks:PropTypes.object.isRequired,
+}
 
 export default connect(mapStateToProps,mapDispatchToProps)(withRouter(TaskCompletes));

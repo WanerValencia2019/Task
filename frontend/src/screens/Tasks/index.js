@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from "prop-types"
 import { getTask, deleteTask } from './actionCreators';
 import { connect, useDispatch } from 'react-redux';
 import TaskView from './../../components/TaskView';
-import { Grid, Paper } from '@material-ui/core';
+import { Grid, Paper,Container } from '@material-ui/core';
 import TabsNav from '../../components/Tabs';
 import { withRouter } from 'react-router';
 import Modal from './../../litteComponents/Modal/index.js';
@@ -21,10 +22,10 @@ const Tasks = (props) => {
   const deletet = (id, token) => {
     return dispatch(deleteTask(id, token));
   };
-  
+
 
   return (
-    <div style={{ margin: 10 }}>
+    <Container style={{ margin: 10 }}>
       <h4>Listando Tareas</h4>
       <Grid container direction="row" justify="center" spacing={2}>
         {tasks ? (
@@ -49,10 +50,16 @@ const Tasks = (props) => {
           <p>No hay tareas</p>
         )}
       </Grid>
-    </div>
+    </Container>
   );
 };
 
+Tasks.propTypes = {
+  getTask:PropTypes.func.isRequired,
+  idUser:PropTypes.number.isRequired,
+  token:PropTypes.string.isRequired,
+  tasks:PropTypes.object.isRequired,
+}
 const mapStateToProps = (state) => {
   return {
     tasks: state.tasks,

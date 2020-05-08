@@ -1,12 +1,12 @@
 import React from "react";
+import PropTypes from "prop-types"
 import { connect } from "react-redux";
 import { logout } from "./../Login/actionCreators";
-
 //NavBar SE DEBE REFACTORIZAR EN UN COMPONENTE HOME
 import NavBar from "./../../components/NavBar/index";
 import TaskCreate from "../TaskCreate";
 import Configuration from "../Configuration";
-import { Grid, CssBaseline } from "@material-ui/core";
+import { Grid, CssBaseline,Container } from "@material-ui/core";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import TabsNav from "../../components/Tabs";
 import TaskUpdate from "./../TaskUpdate/index.js";
@@ -15,7 +15,7 @@ import Register from "./../Register/index.js";
 import styles from "./styles";
 import PrivateRoutes from "./PrivateRoutes.js";
 function Routes(props) {
-  const { userInfo } = props;
+  const { userInfo,logout } = props;
   const classes = styles();
   console.log(userInfo);
   return (
@@ -25,13 +25,13 @@ function Routes(props) {
           first_name={userInfo.user.first_name}
           last_name={userInfo.user.last_name}
           token={userInfo.token}
-          logout={props.logout}
+          logout={logout}
         />
       ) : null}
       <div className={classes.content}>
         <CssBaseline />
         <Switch>
-          <Route path="/register">
+          <Route path="/register" exact>
             <Register isAuthenticated={userInfo.isAuthenticated} />
           </Route>
           <Route path="/login"  >
@@ -46,13 +46,15 @@ function Routes(props) {
             )}
           />
 
-          <PrivateRoutes isAuthenticated={userInfo.isAuthenticated} path="/configuraciones" component={()=><Configuration user={userInfo.user} />} />
+          <PrivateRoutes isAuthenticated={userInfo.isAuthenticated} path="/configuraciones" component={()=>  <Grid className={classes.gridNewTask} container><Configuration user={userInfo.user} />  </Grid>} />
 
           <PrivateRoutes
             isAuthenticated={userInfo.isAuthenticated}
             path="/task/update/:id"
             component={() => (
-              <TaskUpdate idUser={userInfo.user.id} token={userInfo.token} />
+              <Grid className={classes.gridNewTask} container>
+                <TaskUpdate idUser={userInfo.user.id} token={userInfo.token} />
+              </Grid>
             )}
           />
 
@@ -65,10 +67,6 @@ function Routes(props) {
               </Grid>
             )}
           />
-
-          <Route path="/register" exact>
-            <Register />
-          </Route>
           <Route>
             <div>
               <h2>Pagina no encontrada</h2>
@@ -83,5 +81,10 @@ function Routes(props) {
 const mapDispatchToProps = {
   logout,
 };
+
+Routes.propTypes = {
+  userInfo:PropTypes.object.isRequired,
+  logout:PropTypes.func.isRequired,
+}
 
 export default connect(null, mapDispatchToProps)(Routes);

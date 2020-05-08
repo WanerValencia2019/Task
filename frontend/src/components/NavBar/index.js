@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from "prop-types"
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -30,6 +31,7 @@ import useStyles from './styles';
 import { useTheme } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
+
 
 function NavBar(props) {
   //console.log(props);
@@ -235,4 +237,14 @@ function NavBar(props) {
   );
 }
 
+NavBar.propTypes = {
+  logout:PropTypes.func.isRequired,
+  history:PropTypes.object.isRequired,
+  first_name:PropTypes.string.isRequired,
+  last_name:PropTypes.string.isRequired,
+  token:PropTypes.string.isRequired,
+}
+NavBar.defaultProps = {
+  first_name: 'Desconocido'
+}
 export default withRouter(NavBar);

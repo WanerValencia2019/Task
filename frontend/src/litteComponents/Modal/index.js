@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from "prop-types"
 import {
 	Button,
 	Dialog,
@@ -18,7 +19,7 @@ function Modal(props) {
 		open,
 		setOpen,
 		title,
-		message,
+		description,
 		accept,
 		message_accept,
 		message_disclaim,
@@ -55,7 +56,7 @@ function Modal(props) {
 		>
 			<DialogTitle>{title}</DialogTitle>
 			<DialogContent>
-				<DialogContentText>{message}</DialogContentText>
+				<DialogContentText>{description}</DialogContentText>
 			</DialogContent>
 			<DialogActions>
 				<Button
@@ -75,7 +76,28 @@ function Modal(props) {
 			</DialogActions>
 		</Dialog>
 	);
-
 	return <div>{dialog}</div>;
 }
+
+
+Modal.propTypes = {
+  open:PropTypes.bool.isRequired,
+	setOpen:PropTypes.func.isRequired,
+	title:PropTypes.string.isRequired,
+	description:PropTypes.string.isRequired,
+	message_accept:PropTypes.string.isRequired,
+	message_disclaim:PropTypes.string.isRequired,
+	color_accept:PropTypes.string.isRequired,
+	color_disclaim:PropTypes.string.isRequired,
+	accept:PropTypes.func.isRequired,
+}
+Modal.defaultProps = {
+  open:false,
+	color_accept:"#a234",
+	color_disclaim:"#f4f4f3",
+	message_accept:"Aceptar",
+	message_disclaim:"Cancelar"
+}
+
+
 export default Modal;

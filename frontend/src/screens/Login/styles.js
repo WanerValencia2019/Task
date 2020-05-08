@@ -6,7 +6,8 @@ export default makeStyles(theme => ({
   container: {
     background: "linear-gradient(to left,#007991,#78ffd6);",
     //background:"#000",
-    height:height-20,
+    height:height,
+    overflow: "hidden",
   },
   paper: {
     padding: theme.spacing(2),

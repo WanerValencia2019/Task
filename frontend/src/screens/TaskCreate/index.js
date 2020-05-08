@@ -8,7 +8,7 @@ import { createTask } from "./actionsCreator";
 import { withRouter } from "react-router";
 
 function TaskCreate(props) {
-  const { token, idUser, history } = props;
+  const { token, idUser, history, createdTask } = props;
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -18,7 +18,7 @@ function TaskCreate(props) {
   //const selector=useSelector();
   //console.log(props);
   const classes = styles();
-  const { createdTask } = props;
+
   const initTask = async () => {
     await dispatch(createTask(title, description, token, idUser));
     /*console.log("Hola "+props.createdTask.error)
@@ -101,9 +101,14 @@ function TaskCreate(props) {
     </>
   );
 }
+
 TaskCreate.propTypes = {
   token: PropTypes.string.isRequired,
+  idUser:PropTypes.number.isRequired,
+  history:PropTypes.object.isRequired,
+  createdTask:PropTypes.object.isRequired,
 };
+
 const mapStateToProps = (state) => {
   return {
     createdTask: state.createTask,

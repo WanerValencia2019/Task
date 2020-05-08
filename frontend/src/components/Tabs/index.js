@@ -10,6 +10,7 @@ import { Paper } from '@material-ui/core';
 import Tasks from './../../screens/Tasks';
 import TaskCompletes from './../../screens/TaskCompletes/index.js';
 import TaskFavorites from './../../screens/TaskFavorites/index.js';
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -86,4 +87,10 @@ function TabsNav(props) {
     </div>
   );
 }
+
+TabsNav.propTypes = {
+  token:PropTypes.string.isRequired,
+  idUser:PropTypes.number.isRequired
+}
+
 export default TabsNav;
