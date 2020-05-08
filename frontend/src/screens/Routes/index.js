@@ -12,6 +12,7 @@ import TabsNav from '../../components/Tabs';
 import TaskUpdate from './../TaskUpdate/index.js';
 import Register from "./../Register/index.js"
 import styles from './styles';
+import PrivateRoutes from './PrivateRoutes.js'
 function Routes(props) {
   const { userInfo } = props;
   const classes = styles();
@@ -21,18 +22,24 @@ function Routes(props) {
       <NavBar
         first_name={userInfo.user.first_name}
         last_name={userInfo.user.last_name}
+        token={userInfo.token}
         logout={props.logout}
       />
       <div className={classes.content}>
         <Switch>
-          <Route path="/" exact>
+          <PrivateRoutes path="/" exact>
             <TabsNav idUser={userInfo.user.id} token={userInfo.token} />
-          </Route>
+          </PrivateRoutes>
 
           <Route path="/configuraciones">
             <Configuration user={userInfo.user} />
           </Route>
+          <Route path="/login">
 
+          </Route>
+          <PrivateRoutes path="/register">
+            <Register />
+          </PrivateRoutes>
           <Route path="/task/update/:id">
             <TaskUpdate idUser={userInfo.user.id} token={userInfo.token} />
           </Route>

@@ -11,7 +11,7 @@ class TaskAPI(serializers.ModelSerializer):
         createTask.title=data.get('title')
         createTask.Description=data.get('Description')
         createTask.created_by=data.get('created_by')
-        #createTask.save()
+        createTask.save()
 
         return createTask
 

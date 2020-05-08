@@ -6,7 +6,7 @@ import { Snackbar } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 
 const SnackBarBase = (props) => {
-  const { open, onClose, message, type, setOpen } = props;
+  const { open, onClose, message, type,variant } = props;
   console.log(onClose);
   const snack = (
     <Snackbar
@@ -19,7 +19,7 @@ const SnackBarBase = (props) => {
       onClose={() => onClose}
       message={message}
     >
-      <Alert variant="filled" onClose={() => onClose()} severity={type}>
+      <Alert variant={variant} onClose={() => onClose()} severity={type}>
         {' '}
         {message}
       </Alert>
@@ -31,11 +31,13 @@ const SnackBarBase = (props) => {
 SnackBarBase.propTypes = {
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  type: PropTypes.oneOf(['sucess', 'error', 'info', 'warning']),
+  type: PropTypes.oneOf(['success', 'error', 'info', 'warning']),
   message: PropTypes.string.isRequired,
+  variant: PropTypes.oneOf(['filled','standard','outlined']),
 };
 SnackBarBase.defaultProps = {
   open: false,
-  type: 'error',
+  type: 'success',
+  variant:'filled'
 };
 export default SnackBarBase;

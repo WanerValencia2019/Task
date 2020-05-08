@@ -43,8 +43,9 @@ class CreateTaskView(APIView):
         serializer=TaskAPI(data=request.data)
         serializer.is_valid(raise_exception=True)
         #print(request.data.get('title'))
-        #data=serializer.validate_data
+        #data=serializer.validate
         #print(serializer.validate)
+
         #task=Task.objects.create(**data)
         serializer.save()
 

@@ -1,46 +1,49 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { Grid, TextField, Button, Paper, Typography } from '@material-ui/core';
-import { useDispatch, connect } from 'react-redux';
-import styles from './styles';
-import SnackBarBase from './../../litteComponents/SnackBar/index';
-import { createTask } from './actionsCreator';
-import { withRouter } from 'react-router';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import { Grid, TextField, Button, Paper, Typography } from "@material-ui/core";
+import { useDispatch, connect } from "react-redux";
+import styles from "./styles";
+import SnackBarBase from "./../../litteComponents/SnackBar/index";
+import { createTask } from "./actionsCreator";
+import { withRouter } from "react-router";
 
 function TaskCreate(props) {
   const { token, idUser, history } = props;
   const [open, setOpen] = useState(false);
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [message,setMessage]= useState("");
 
   const dispatch = useDispatch();
   //const selector=useSelector();
-  console.log(props);
+  //console.log(props);
   const classes = styles();
   const { createdTask } = props;
   const initTask = async () => {
     await dispatch(createTask(title, description, token, idUser));
+    /*console.log("Hola "+props.createdTask.error)
     if (props.createdTask.error) {
       setOpen(true);
       cleanState();
+      await setMessage(props.createdTask.message)
       setTimeout(async () => {
         await handleClose();
-        history.push('/');
+        history.push("/");
       }, 2000);
-    }
+    }*/
   };
 
   const cleanState = () => {
-    setTitle('');
-    setDescription('');
+    setTitle("");
+    setDescription("");
   };
 
   const handleClose = () => {
     setOpen(false);
-    console.log('cerrando');
+    console.log("cerrando");
   };
 
-  console.log(props);
+  //console.log(props);
   /*if (props.createdTask.error === false) {
     setOpen(true);
 
@@ -50,7 +53,7 @@ function TaskCreate(props) {
     <>
       <Grid container direction="column">
         <Paper className={classes.paper}>
-          <Typography style={{ textAlign: 'center' }} variant="h5">
+          <Typography style={{ textAlign: "center" }} variant="h5">
             Crear Tarea
           </Typography>
           <Grid item container direction="column">
@@ -92,7 +95,7 @@ function TaskCreate(props) {
       <SnackBarBase
         setOpen={setOpen}
         open={open}
-        message="Tarea creada con éxito"
+        message={message}
         onClose={handleClose}
       />
     </>

@@ -8,7 +8,7 @@ export const getLogin = (username, password) => async (dispatch) => {
     password: password,
   };
   axios
-    .post("http://127.0.0.1:8000/api/v1/auth/login/", params)
+    .post("http://127.0.0.1:8000/api/v1/auth/login", params)
     .then((res) => {
       console.log(res);
       return dispatch({
@@ -19,29 +19,30 @@ export const getLogin = (username, password) => async (dispatch) => {
     })
     .catch((error) => {
       console.log(error.response.data.message[0]);
+      const message=error.response.data.message[0]
       return dispatch({
         type: Actions.LOGIN_ERROR,
-        message: error.response.data.message[0],
+        message: message,
       });
     });
 };
 export const logout = (token) => (dispatch, getState) => {
   console.log(getState);
-
+  console.log(token)
   const config = {
     headers: {
       Authorization: `Token ${token}`,
     },
-  };
+  }
   axios
-    .post("http://127.0.0.1:8000/api/v1/auth/logout/", config)
+    .post("http://127.0.0.1:8000/api/v1/auth/logout",null,config)
     .then((res) => {
       return dispatch({
         type: Actions.SIGN_OFF,
       })
-    });
+    })
     .catch((err)=>{
-      console.log(error.response)
+      console.log(err.response)
     })
 
 };

@@ -33,25 +33,26 @@ import { withRouter } from 'react-router';
 
 function NavBar(props) {
   //console.log(props);
-  const { logout, history, first_name, last_name } = props;
+  const { logout, history, first_name, last_name,token } = props;
+  //console.log(props)
   const classes = useStyles();
   const theme = useTheme();
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  //const [anchorEl, setAnchorEl] = React.useState(null);
   const [anchorProfile, setAnchorProfile] = React.useState(null);
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-  const isMenuProfileOpen = Boolean(anchorProfile);
+  //const isMenuProfileOpen = Boolean(anchorProfile);
   const handleMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
+    //setAnchorEl(event.currentTarget);
     setIsMenuOpen(true);
   };
-  const handleProfileMenuOpen = (event) => {
+  /*const handleProfileMenuOpen = (event) => {
     setAnchorProfile(event.currentTarget);
   };
   const handleProfileMenuClose = () => {
     setAnchorProfile(null);
-  };
+  };*/
   const handleMenuClose = () => {
-    setAnchorEl(null);
+   // setAnchorEl(null);
     setIsMenuOpen(false);
   };
   const navigateTask = (index) => {
@@ -82,7 +83,7 @@ function NavBar(props) {
     }
   };
 
-  const renderMenuProfile = (
+  /*const renderMenuProfile = (
     <Menu
       open={isMenuProfileOpen}
       onClose={handleProfileMenuClose}
@@ -94,10 +95,10 @@ function NavBar(props) {
       <MenuItem onClick={() => history.push('/configuraciones')}>
         Configuraciones
       </MenuItem>
-      <MenuItem onClick={() => logout()}>Cerrar sesión</MenuItem>
+      <MenuItem onClick={() => logout(token)}>Cerrar sesión</MenuItem>
     </Menu>
   );
-
+*/
   const drawer = (
     <Drawer
       className={classes.drawer}
@@ -158,7 +159,7 @@ function NavBar(props) {
           <ListItem
             className={classes.cursor_pointer}
             key={i}
-            onClick={() => logout()}
+            onClick={() => logout(token)}
           >
             <ListItemIcon>
               {i == 0 ? (
@@ -221,7 +222,7 @@ function NavBar(props) {
           </Typography>
 
           <PowerSettingsNewIcon
-            onClick={() => logout()}
+            onClick={() => logout(token)}
             color="secondary"
             className={classes.cursor_pointer}
             style={{ paddingLeft: 25 }}
@@ -229,7 +230,7 @@ function NavBar(props) {
         </Toolbar>
       </AppBar>
       {drawer}
-      {renderMenuProfile}
+      {/*renderMenuProfile*/}
     </div>
   );
 }

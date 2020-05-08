@@ -23,6 +23,7 @@ export const descriptionCreateReducer = (state = { text: "" }, action) => {
 const initialState = {
   error: true,
   status: null,
+  message:null,
 };
 export const createTask = (state = initialState, action) => {
   switch (action.type) {
@@ -30,7 +31,7 @@ export const createTask = (state = initialState, action) => {
       return { ...state, status: action.status, error: false };
       break;
     case Actions.CREATE_TASK_ERROR:
-      return { ...state, status: action.status, error: true };
+      return { ...state, status: action.status, error: true,message:action.message };
       break;
     default:
       return state;

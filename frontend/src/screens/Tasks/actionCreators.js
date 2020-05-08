@@ -1,14 +1,14 @@
-import Actions from './../../redux/actionTypes';
-import axios from 'axios';
+import Actions from "./../../redux/actionTypes";
+import axios from "axios";
 
 const getTask = (idUser, token) => async (dispatch) => {
-  config={
+  const config = {
     headers: {
-        Authorization: `Token ${token}`,
-      }
-  }
+      Authorization: `Token ${token}`,
+    },
+  };
   axios
-    .get(`http://127.0.0.1:8000/api/v1/task/list/?id=${idUser}`,config)
+    .get(`http://127.0.0.1:8000/api/v1/task/list/?id=${idUser}`, config)
     .then((res) => {
       console.log(res.data);
       return dispatch({
@@ -23,11 +23,11 @@ const getTask = (idUser, token) => async (dispatch) => {
     });
 };
 const deleteTask = (idTask, token) => async (dispatch) => {
-  config={
+  const config = {
     headers: {
-        Authorization: `Token ${token}`,
-      }
-  }
+      Authorization: `Token ${token}`,
+    },
+  };
   axios
     .delete(`http://127.0.0.1:8000/api/v1/task/delete/${idTask}/`, config)
     .then((res) => {
