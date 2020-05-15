@@ -114,7 +114,7 @@ function NavBar(props) {
       <div className={classes.drawerHeader}>
         <IconButton onClick={handleMenuClose}>
           <Typography variant="h5" style={{ color: '#000' }}>
-            Only Task
+            Seven Task
           </Typography>
           {theme.direction === 'ltr' ? (
             <ChevronLeftIcon />
@@ -197,7 +197,7 @@ function NavBar(props) {
             <MenuIcon />
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
-            ONLY-TASKS
+            SEVEN-TASKS
           </Typography>
           {/*
           <div className={classes.search}>
