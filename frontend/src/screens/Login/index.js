@@ -175,7 +175,7 @@ const mapStateToProps = (state) => {
 
 Login.propTypes = {
   isAuthenticated:PropTypes.bool.isRequired,
-  history:PropTypes.string.isRequired,
+  history:PropTypes.object.isRequired,
   dispatch:PropTypes.func.isRequired,
   login:PropTypes.object.isRequired,
 }

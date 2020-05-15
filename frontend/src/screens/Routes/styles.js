@@ -9,7 +9,8 @@ export default makeStyles((theme) => ({
       width: 600,
       height: 600,
       //marginTop: '3%',
-      marginLeft: '30%',
+      //marginLeft: '30%',
+      margin:"auto"
     },
   },
   content: {

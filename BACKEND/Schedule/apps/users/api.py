@@ -1,6 +1,6 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .serializers import * 
+from .serializers import *
 from rest_framework.authtoken.models import Token
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
@@ -13,17 +13,20 @@ from django.middleware.csrf import get_token
 #from django.contrib.auth import login
 
 
-class CreateUserVIEW(APIView):
+class CreateUserVIEW(GenericAPIView):
+    serializer_class=CreateUserSerializer
     def post(self,request):
         #print(request)
-        serializer=CreateUserSerializer(data=request.data)
-        if serializer.is_valid():
-            user=serializer.save()
-            Token.objects.get_or_create(user=user)
-            #login(request,user)
-            return Response(serializer.data,status.HTTP_201_CREATED)
-        else:
-            return Response(serializer.errors,status.HTTP_400_BAD_REQUEST)
+        serializer=self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        data=serializer.data
+        user=User.objects.get(**data)
+        token=Token.objects.create(user=user)
+        print(dir(token))
+        login(self.request,user)
+        return Response({"User":UserSerializer(user,context=self.get_serializer_context()).data,"Token":token.key},status.HTTP_200_OK)
+
 
 #LOGIN
 class LoginView(GenericAPIView):
@@ -56,7 +59,7 @@ class LogoutView(APIView):
 #CAMBIANDO LA CONTRASEÑA DEL USUARIO
 class ChangePasswordView(UpdateAPIView):
     serializer_class=ChangePasswordSerializer
-    model=User
+    #model=User
     permission_classes=(IsAuthenticated,)
     authentication_classes=(TokenAuthentication,)
     def get_object(self,queryset=None):

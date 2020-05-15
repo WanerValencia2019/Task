@@ -46,7 +46,7 @@ function Routes(props) {
             )}
           />
 
-          <PrivateRoutes isAuthenticated={userInfo.isAuthenticated} path="/configuraciones" component={()=>  <Grid className={classes.gridNewTask} container><Configuration user={userInfo.user} />  </Grid>} />
+          <PrivateRoutes isAuthenticated={userInfo.isAuthenticated} path="/configuraciones" component={()=>  <Grid className={classes.gridNewTask} container><Configuration  token={userInfo.token} user={userInfo.user} />  </Grid>} />
 
           <PrivateRoutes
             isAuthenticated={userInfo.isAuthenticated}

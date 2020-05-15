@@ -5,13 +5,16 @@ from django.contrib.auth import authenticate
 from rest_framework.authtoken.models import Token
 
 class CreateUserSerializer(serializers.Serializer):
-    id=serializers.ReadOnlyField();
+    model=User
+    id=serializers.ReadOnlyField()
+    #print(dir(serializers))
     username=serializers.CharField(required=True)
     last_name=serializers.CharField(required=True)
     first_name=serializers.CharField(required=True)
     email=serializers.EmailField()
     password=serializers.CharField(required=True)
     def create(self,validated_data):
+        #print(data.get('username'))
         user=User()
         user.username=validated_data.get('username')
         user.first_name=validated_data.get('first_name')
@@ -19,15 +22,16 @@ class CreateUserSerializer(serializers.Serializer):
         user.email=validated_data.get('email')
         user.set_password(validated_data.get('password'))
         user.save()
+        print(user)
         return user
-    def validate(self,data):
-        print(data.get('username'))
-        users=User.objects.filter(username=data.get('username'),email=data.get('email'))
+
+    def validate(self,validated_data):
+        #print(validated_data.get('username'))
+        users=User.objects.filter(username=validated_data.get('username'),email=validated_data.get('email'))
         if len(users) != 0:
             raise serializers.ValidationError({"message":"El nombre de usuario Y/O email ya se encuentra registrado"})
-        else:
-            return users
-    
+        return validated_data
+
 
 class LoginSerializer(serializers.Serializer):
     username=serializers.CharField(required=True)
@@ -55,7 +59,7 @@ class LoginSerializer(serializers.Serializer):
         if user and user.is_active:
             return user
         raise serializers.ValidationError({"message":"Usuario o contraseña incorrectos"})
-    
+
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -63,22 +67,23 @@ class UserSerializer(serializers.ModelSerializer):
         fields=("id","username","email","first_name","last_name")
 
 
+
 #cambiando la contraseña del usuario
 class ChangePasswordSerializer(serializers.Serializer):
-    old_password=serializers.CharField(required=True)
-    password=serializers.CharField(required=True)
-    password_confirm=serializers.CharField(required=True)
-
     def validate(self,validated_data):
-        print(validated_data)
+        #print(validated_data)
         user=self.context['request'].user
-        print(dir(user))
+        #print(dir(user))
         old_password=validated_data.get('old_password')
-        if not (user.password==old_password):
+        print(user.check_password(old_password))
+        #print(f"{old_password} {user.password}")
+        if not(user.check_password(old_password)):
             raise serializers.ValidationError({"message":"La contraseña actual no es correcta"})
+
         elif not(validated_data.get('password')== validated_data.get('password_confirm')):
             raise serializers.ValidationError({"message":"Las contraseñas no coinciden"})
-        elif not (validated_data.get('password')>8):
+
+        elif not (len(validated_data.get('password'))>8):
             raise serializers.ValidationError({"message":"La contraseña debe contener mas caracteres"})
         return validated_data
 
@@ -108,7 +113,7 @@ class ChangeUsernameSerializer(serializers.Serializer):
 
         if len(exists)!=0:
             raise serializers.ValidationError({"message":"El nombre de usuario ya se encuentra en uso"})
-        if not(len(username)>8):
+        if not(len(username)>=6):
             raise serializers.ValidationError({"message":"El nombre de usuario es muy corto"})
         return validated_data
 
@@ -124,6 +129,3 @@ class ChangeEmailSerializer(serializers.Serializer):
             user.email=validated_data.get('email')
             user.save()
             return user
-
-
-        
