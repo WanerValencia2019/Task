@@ -20,6 +20,8 @@ function Login(state = initialState, action) {
     case Actions.SIGN_OFF:
       return {...state,isAuthenticated:false,user:null,token:null,error:false}
       break;
+    case Actions.REFRESH_USER:
+      return {...state,user:action.user,token:action.token,isAuthenticated:true}
     default:
       return state;
       break;

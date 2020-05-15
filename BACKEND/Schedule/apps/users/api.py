@@ -94,3 +94,15 @@ class ChangeEmailView(UpdateAPIView):
     def get_object(self,queryset=None):
         user=self.request.user
         return user
+
+class UserInfo(APIView):
+    permission_classes=(IsAuthenticated,)
+    authentication_classes=(TokenAuthentication,)
+
+    def get(self,request):
+        serializer=UserSerializer(request.user)
+        token=Token.objects.get(user=request.user)
+        print(token)
+        user=serializer.data
+        print(serializer.data)
+        return  Response({"User":user,"Token":token.key},status.HTTP_200_OK)

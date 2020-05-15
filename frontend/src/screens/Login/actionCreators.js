@@ -18,8 +18,8 @@ export const getLogin = (username, password) => async (dispatch) => {
       });
     })
     .catch((error) => {
-      console.log(error.response.data.message[0]);
-      const message=error.response.data.message[0]
+      //console.log(error.response.data.message[0]);
+      const message=error.response ? error.response.data.message[0]: "Revisa tu conexión a internet"
       return dispatch({
         type: Actions.LOGIN_ERROR,
         message: message,
